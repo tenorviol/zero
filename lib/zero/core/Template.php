@@ -27,7 +27,7 @@
 namespace zero\core;
 
 class Template {
-  private $path;
+  public $path;
   private $locals;
 
   public function __construct($path, array $locals = array()) {
