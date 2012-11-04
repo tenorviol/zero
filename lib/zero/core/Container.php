@@ -26,6 +26,7 @@
 
 namespace zero\core;
 
+use ArrayAccess;
 use BadMethodCallException;
 
 /**
@@ -81,7 +82,7 @@ use BadMethodCallException;
  *
  *  echo $site->table->users->count();
  */
-class Container {
+class Container implements ArrayAccess {
 
   /**
    * If a property doesn't exist yet, create and store it.
@@ -120,5 +121,21 @@ class Container {
       $this->$lcproperty = $this->$method();
     }
     return $this->$lcproperty;
+  }
+
+  public function offsetExists($offset) {
+    return isset($this->$offset);
+  }
+
+  public function offsetGet($offset) {
+    return $this->$offset;
+  }
+
+  public function offsetSet($offset, $value) {
+    $this->$offset = $value;
+  }
+
+  public function offsetUnset($offset) {
+    unset($this->$offset);
   }
 }
